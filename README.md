@@ -1,4 +1,7 @@
 # job4j_car_accident
+
+[![Build Status](https://app.travis-ci.com/olliestyle/job4j_car_accident.svg?branch=main)](https://app.travis-ci.com/olliestyle/job4j_car_accident)
+
 Проект - Автонарушители.
 <br />
 В системе существуют две роли. Обычные пользователи и автоинспекторы.
