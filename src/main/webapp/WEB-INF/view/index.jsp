@@ -22,12 +22,17 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </head>
 <body>
+Все Заявления
     <div class="card-body">
         <table class="table">
             <tbody>
-            <c:forEach items="${users}" var="user">
+            <c:forEach items="${accidents}" var="accident">
                 <tr>
-                    <td><c:out value="${user}"/></td>
+                    <td><c:out value="${accident.key}"/></td>
+                    <td><c:out value="${accident.value.id}"/></td>
+                    <td><c:out value="${accident.value.name}"/></td>
+                    <td><c:out value="${accident.value.text}"/></td>
+                    <td><c:out value="${accident.value.address}"/></td>
                 </tr>
             </c:forEach>
             </tbody>
