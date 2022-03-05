@@ -21,4 +21,13 @@ public class AccidentMem {
     public Collection<Accident> findAll() {
         return accidents.values();
     }
+
+    public void create(Accident accident) {
+        accident.setId(accidents.keySet().size() + 1);
+        accidents.put(accidents.keySet().size() + 1, accident);
+    }
+
+    public void update(Accident accident) {
+        accidents.put(accident.getId(), accident);
+    }
 }

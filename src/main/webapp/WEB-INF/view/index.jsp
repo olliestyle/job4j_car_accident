@@ -23,6 +23,8 @@
 </head>
 <body>
 Все Заявления
+<br>
+<a href="<c:url value='/create'/>">Добавить инцидент</a>
     <div class="card-body">
         <table class="table">
             <tbody>
@@ -32,6 +34,18 @@
                     <td><c:out value="${accident.name}"/></td>
                     <td><c:out value="${accident.text}"/></td>
                     <td><c:out value="${accident.address}"/></td>
+                    <td>
+                        <form action="<c:url value='/edit'/>" method='GET'>
+                            <td colspan='2'>
+                                <input type="hidden" name="id" value="${accident.id}">
+                                <input type="hidden" name="name" value="${accident.name}">
+                                <input type="hidden" name="text" value="${accident.text}">
+                                <input type="hidden" name="address" value="${accident.address}">
+                                <input name="submit" type="submit" value="Редактировать" />
+                            </td>
+<%--                        <a href="<c:url value='/edit?id=${accident.id}'/>">Редактировать</a>--%>
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
