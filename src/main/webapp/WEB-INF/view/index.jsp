@@ -28,11 +28,10 @@
             <tbody>
             <c:forEach items="${accidents}" var="accident">
                 <tr>
-                    <td><c:out value="${accident.key}"/></td>
-                    <td><c:out value="${accident.value.id}"/></td>
-                    <td><c:out value="${accident.value.name}"/></td>
-                    <td><c:out value="${accident.value.text}"/></td>
-                    <td><c:out value="${accident.value.address}"/></td>
+                    <td><c:out value="${accident.id}"/></td>
+                    <td><c:out value="${accident.name}"/></td>
+                    <td><c:out value="${accident.text}"/></td>
+                    <td><c:out value="${accident.address}"/></td>
                 </tr>
             </c:forEach>
             </tbody>

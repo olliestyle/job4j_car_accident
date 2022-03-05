@@ -3,6 +3,7 @@ package ru.job4j.caraccident.repository;
 import org.springframework.stereotype.Repository;
 import ru.job4j.caraccident.model.Accident;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class AccidentMem {
         accidents.put(3, new Accident(3, "three", "threeText", "threeAddress"));
     }
 
-    public Map<Integer, Accident> findAll() {
-        return accidents;
+    public Collection<Accident> findAll() {
+        return accidents.values();
     }
 }
