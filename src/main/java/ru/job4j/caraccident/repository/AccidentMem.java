@@ -25,11 +25,20 @@ public class AccidentMem {
     }
 
     public void create(Accident accident) {
-        accident.setId(idCounter.get());
-        accidents.put(idCounter.getAndIncrement(), accident);
+        int id = accident.getId();
+        if (id != 0) {
+            accidents.get(id).setName(accident.getName());
+        } else {
+            accident.setId(idCounter.get());
+            accidents.put(idCounter.getAndIncrement(), accident);
+        }
     }
 
     public void update(Accident accident) {
         accidents.put(accident.getId(), accident);
+    }
+
+    public Accident findById(int id) {
+        return accidents.get(id);
     }
 }

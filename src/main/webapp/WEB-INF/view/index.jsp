@@ -28,6 +28,10 @@
     <div class="card-body">
         <table class="table">
             <tbody>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Адрес</th>
             <c:forEach items="${accidents}" var="accident">
                 <tr>
                     <td><c:out value="${accident.id}"/></td>
@@ -43,8 +47,10 @@
                                 <input type="hidden" name="address" value="${accident.address}">
                                 <input name="submit" type="submit" value="Редактировать" />
                             </td>
-<%--                        <a href="<c:url value='/edit?id=${accident.id}'/>">Редактировать</a>--%>
                         </form>
+                    </td>
+                    <td>
+                        <a href="<c:url value='/update?id=${accident.id}'/>">Обновить название</a>
                     </td>
                 </tr>
             </c:forEach>

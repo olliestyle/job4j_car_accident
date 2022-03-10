@@ -5,6 +5,7 @@ import ru.job4j.caraccident.model.Accident;
 import ru.job4j.caraccident.repository.AccidentMem;
 
 import java.util.Collection;
+import java.util.Map;
 
 @Service
 public class AccidentService {
@@ -27,4 +28,7 @@ public class AccidentService {
         accidentMem.update(accident);
     }
 
+    public Accident findById(int id) {
+        return accidentMem.findById(id);
+    }
 }
