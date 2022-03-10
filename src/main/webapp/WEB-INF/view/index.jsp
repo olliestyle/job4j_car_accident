@@ -32,12 +32,14 @@
             <th>Название</th>
             <th>Описание</th>
             <th>Адрес</th>
+            <th>Тип происшествия</th>
             <c:forEach items="${accidents}" var="accident">
                 <tr>
                     <td><c:out value="${accident.id}"/></td>
                     <td><c:out value="${accident.name}"/></td>
                     <td><c:out value="${accident.text}"/></td>
                     <td><c:out value="${accident.address}"/></td>
+                    <td><c:out value="${accident.accidentType.name}"/></td>
                     <td>
                         <form action="<c:url value='/edit'/>" method='GET'>
                             <td colspan='2'>
@@ -45,6 +47,7 @@
                                 <input type="hidden" name="name" value="${accident.name}">
                                 <input type="hidden" name="text" value="${accident.text}">
                                 <input type="hidden" name="address" value="${accident.address}">
+                                <input type="hidden" name="accidentType.id" value="${accident.accidentType.id}">
                                 <input name="submit" type="submit" value="Редактировать" />
                             </td>
                         </form>

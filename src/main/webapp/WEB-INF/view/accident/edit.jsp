@@ -34,6 +34,15 @@
             <td><input type="hidden" name="id" value="${accident.id}"></td>
         </tr>
         <tr>
+            <td>Поменяйте тип:</td>
+            <td>
+                <select name="accidentType.id">
+                    <c:forEach var="type" items="${types}" >
+                        <option value="${type.id}">${type.name}</option>
+                    </c:forEach>
+                </select>
+        </tr>
+        <tr>
             <td colspan='2'><input name="submit" type="submit" value="Сохранить" /></td>
         </tr>
     </table>

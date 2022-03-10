@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.caraccident.model.Accident;
+import ru.job4j.caraccident.model.AccidentType;
 import ru.job4j.caraccident.service.AccidentService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class AccidentControl {
@@ -21,6 +25,7 @@ public class AccidentControl {
     @GetMapping("/edit")
     public String edit(@ModelAttribute Accident accident, Model model) {
         model.addAttribute("accident", accident);
+        model.addAttribute("types", accidentService.findAllTypes());
         return "accident/edit";
     }
 
@@ -37,7 +42,8 @@ public class AccidentControl {
     }
 
     @GetMapping("/create")
-    public String create() {
+    public String create(Model model) {
+        model.addAttribute("types", accidentService.findAllTypes());
         return "accident/create";
     }
 
