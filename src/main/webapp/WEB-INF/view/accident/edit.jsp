@@ -32,6 +32,11 @@
             <td>Поменяйте адрес:</td>
             <td><input type='text' name='address' value="${accident.address}"></td>
             <td><input type="hidden" name="id" value="${accident.id}"></td>
+            <td>
+                <c:forEach items="${rules}" var="ruleId">
+                    <input type="hidden" name="rIds" value="${ruleId}">
+                </c:forEach>
+            </td>
         </tr>
         <tr>
             <td>Поменяйте тип:</td>

@@ -10,8 +10,8 @@ import ru.job4j.caraccident.model.Accident;
 import ru.job4j.caraccident.model.AccidentType;
 import ru.job4j.caraccident.service.AccidentService;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 @Controller
 public class AccidentControl {
@@ -23,15 +23,17 @@ public class AccidentControl {
     }
 
     @GetMapping("/edit")
-    public String edit(@ModelAttribute Accident accident, Model model) {
+    public String edit(@ModelAttribute Accident accident, Model model, HttpServletRequest req) {
         model.addAttribute("accident", accident);
         model.addAttribute("types", accidentService.findAllTypes());
+        model.addAttribute("rules", req.getParameterValues("rIds"));
         return "accident/edit";
     }
 
     @PostMapping("/edit")
-    public String edit(@ModelAttribute Accident accident) {
+    public String edit(@ModelAttribute Accident accident, HttpServletRequest req) {
         accidentService.update(accident);
+        accidentService.setRules(accident, req.getParameterValues("rIds"));
         return "redirect:/";
     }
 
@@ -44,12 +46,17 @@ public class AccidentControl {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("types", accidentService.findAllTypes());
+        model.addAttribute("rules", accidentService.findAllRules());
         return "accident/create";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Accident accident) {
+    public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
         accidentService.create(accident);
+        String[] rIds = req.getParameterValues("rIds");
+        if (rIds != null) {
+            accidentService.setRules(accident, rIds);
+        }
         return "redirect:/";
     }
 }
