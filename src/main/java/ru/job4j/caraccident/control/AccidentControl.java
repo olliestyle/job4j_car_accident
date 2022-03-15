@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.caraccident.model.Accident;
-import ru.job4j.caraccident.model.AccidentType;
 import ru.job4j.caraccident.service.AccidentService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
 
 @Controller
 public class AccidentControl {
@@ -31,16 +29,21 @@ public class AccidentControl {
     }
 
     @PostMapping("/edit")
-    public String edit(@ModelAttribute Accident accident, HttpServletRequest req) {
-        accidentService.update(accident);
-        accidentService.setRules(accident, req.getParameterValues("rIds"));
+    public String edit(@ModelAttribute Accident accident) {
+        accidentService.edit(accident);
         return "redirect:/";
     }
 
     @GetMapping("/update")
     public String update(@RequestParam("id") int id, Model model) {
-        model.addAttribute("accident", accidentService.findById(id));
+        model.addAttribute("accident", accidentService.findAccidentById(id));
         return "accident/update";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute Accident accident) {
+        accidentService.update(accident);
+        return "redirect:/";
     }
 
     @GetMapping("/create")
@@ -52,7 +55,7 @@ public class AccidentControl {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
-        accidentService.create(accident);
+        accidentService.save(accident);
         String[] rIds = req.getParameterValues("rIds");
         if (rIds != null) {
             accidentService.setRules(accident, rIds);
