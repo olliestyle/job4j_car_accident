@@ -1,7 +1,7 @@
 package ru.job4j.caraccident.repository;
 
 import org.springframework.stereotype.Repository;
-import ru.job4j.caraccident.control.Rule;
+import ru.job4j.caraccident.model.Rule;
 import ru.job4j.caraccident.model.Accident;
 import ru.job4j.caraccident.model.AccidentType;
 

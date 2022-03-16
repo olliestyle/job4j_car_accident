@@ -1,56 +1,60 @@
 package ru.job4j.caraccident.service;
 
 import org.springframework.stereotype.Service;
-import ru.job4j.caraccident.control.Rule;
+import ru.job4j.caraccident.model.Rule;
 import ru.job4j.caraccident.model.Accident;
 import ru.job4j.caraccident.model.AccidentType;
-import ru.job4j.caraccident.repository.AccidentJdbcTemplate;
+import ru.job4j.caraccident.repository.AccidentHibernate;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AccidentService {
 
-    private final AccidentJdbcTemplate accidentJdbcTemplate;
+    private final AccidentHibernate accidentHibernate;
 
-    public AccidentService(AccidentJdbcTemplate accidentJdbcTemplate) {
-        this.accidentJdbcTemplate = accidentJdbcTemplate;
+    public AccidentService(AccidentHibernate accidentHibernate) {
+        this.accidentHibernate = accidentHibernate;
     }
 
     public Collection<Accident> findAllAccidents() {
-        return accidentJdbcTemplate.findAllAccidents();
+        return accidentHibernate.findAllAccidents();
     }
 
     public void save(Accident accident) {
-        accidentJdbcTemplate.save(accident);
+        accidentHibernate.save(accident);
     }
 
     public void edit(Accident accident) {
-        accidentJdbcTemplate.edit(accident);
+        accidentHibernate.edit(accident);
     }
 
     public Accident findAccidentById(int id) {
-        return accidentJdbcTemplate.findAccidentById(id);
+        return accidentHibernate.findAccidentById(id);
     }
 
     public List<AccidentType> findAllTypes() {
-        return accidentJdbcTemplate.findAllTypes();
+        return accidentHibernate.findAllTypes();
     }
 
     public List<Rule> findAllRules() {
-        return accidentJdbcTemplate.findAllRules();
+        return accidentHibernate.findAllRules();
     }
 
     public void setRules(Accident accident, String[] rIds) {
-        Integer[] ids = new Integer[rIds.length];
-        for (int i = 0; i < rIds.length; i++) {
-            ids[i] = Integer.parseInt(rIds[i]);
+        Set<Rule> set = new HashSet<>();
+        for (String id: rIds) {
+            Rule rule = new Rule();
+            rule.setId(Integer.parseInt(id));
+            set.add(rule);
         }
-        accidentJdbcTemplate.setRules(accident, ids);
+        accident.setRules(set);
     }
 
     public void update(Accident accident) {
-        accidentJdbcTemplate.update(accident);
+        accidentHibernate.update(accident);
     }
 }

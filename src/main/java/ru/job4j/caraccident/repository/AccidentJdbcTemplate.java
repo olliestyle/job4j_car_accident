@@ -4,7 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.job4j.caraccident.control.Rule;
+import ru.job4j.caraccident.model.Rule;
 import ru.job4j.caraccident.model.Accident;
 import ru.job4j.caraccident.model.AccidentType;
 
@@ -14,7 +14,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/*
 @Repository
+*/
 public class AccidentJdbcTemplate {
 
     private final JdbcTemplate jdbcTemplate;
