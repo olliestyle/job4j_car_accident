@@ -8,7 +8,9 @@ import ru.job4j.caraccident.model.AccidentType;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/*
 @Repository
+*/
 public class AccidentMem {
 
     private final Map<Integer, Accident> accidents = new HashMap<>();

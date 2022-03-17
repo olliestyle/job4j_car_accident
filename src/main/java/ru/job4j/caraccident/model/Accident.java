@@ -6,6 +6,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "accident")
+@NamedEntityGraph(name = "rulesAndAccidentType",
+                    attributeNodes = {
+        @NamedAttributeNode("rules"),
+        @NamedAttributeNode("accidentType")
+                    })
 public class Accident {
 
     @Id
@@ -119,7 +124,7 @@ public class Accident {
 
     @Override
     public String toString() {
-        return "Accident{" + "id=" + id + ", name='" + name + '\'' + ", text='" + text + '\''
-                + ", address='" + address + '\'' + ", accidentType=" + accidentType + '}';
+        return "Accident{" + "id=" + id + ", name='" + name + '\'' + ", text='"
+                + text + '\'' + ", address='" + address + '\'' + '}';
     }
 }

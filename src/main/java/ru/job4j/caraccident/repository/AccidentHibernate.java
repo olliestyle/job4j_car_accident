@@ -10,7 +10,9 @@ import ru.job4j.caraccident.model.AccidentType;
 import java.util.List;
 import java.util.function.Function;
 
+/*
 @Repository
+*/
 public class AccidentHibernate {
 
     private final SessionFactory sf;

@@ -1,10 +1,13 @@
 package ru.job4j.caraccident.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.caraccident.model.Rule;
 import ru.job4j.caraccident.model.Accident;
 import ru.job4j.caraccident.model.AccidentType;
-import ru.job4j.caraccident.repository.AccidentHibernate;
+import ru.job4j.caraccident.repository.AccidentRepository;
+import ru.job4j.caraccident.repository.AccidentTypeRepository;
+import ru.job4j.caraccident.repository.RuleRepository;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,34 +17,53 @@ import java.util.Set;
 @Service
 public class AccidentService {
 
-    private final AccidentHibernate accidentHibernate;
+    private final AccidentRepository accidentRepository;
+    private final AccidentTypeRepository accidentTypeRepository;
+    private final RuleRepository ruleRepository;
 
-    public AccidentService(AccidentHibernate accidentHibernate) {
-        this.accidentHibernate = accidentHibernate;
+    public AccidentService(AccidentRepository accidentRepository, AccidentTypeRepository accidentTypeRepository, RuleRepository ruleRepository) {
+        this.accidentRepository = accidentRepository;
+        this.accidentTypeRepository = accidentTypeRepository;
+        this.ruleRepository = ruleRepository;
     }
 
+    @Transactional
     public Collection<Accident> findAllAccidents() {
-        return accidentHibernate.findAllAccidents();
+        return accidentRepository.findAll();
     }
 
+    @Transactional
     public void save(Accident accident) {
-        accidentHibernate.save(accident);
+        accident.setAccidentType(accidentTypeRepository.findById(accident.getAccidentType().getId()).get());
+        Set<Rule> rules = new HashSet<>();
+        accident.getRules().forEach(rule -> rules.add(ruleRepository.findById(rule.getId()).get()));
+        accident.setRules(rules);
+        accidentRepository.save(accident);
     }
 
+    @Transactional
     public void edit(Accident accident) {
-        accidentHibernate.edit(accident);
+        Accident toUpdate = accidentRepository.findById(accident.getId()).get();
+        toUpdate.setName(accident.getName());
+        toUpdate.setText(accident.getText());
+        toUpdate.setAddress(accident.getAddress());
+        toUpdate.setAccidentType(accidentTypeRepository.findById(accident.getAccidentType().getId()).get());
+        accidentRepository.save(toUpdate);
     }
 
+    @Transactional
     public Accident findAccidentById(int id) {
-        return accidentHibernate.findAccidentById(id);
+        return accidentRepository.findById(id).get();
     }
 
+    @Transactional
     public List<AccidentType> findAllTypes() {
-        return accidentHibernate.findAllTypes();
+        return (List<AccidentType>) accidentTypeRepository.findAll();
     }
 
+    @Transactional
     public List<Rule> findAllRules() {
-        return accidentHibernate.findAllRules();
+        return (List<Rule>) ruleRepository.findAll();
     }
 
     public void setRules(Accident accident, String[] rIds) {
@@ -54,7 +76,10 @@ public class AccidentService {
         accident.setRules(set);
     }
 
+    @Transactional
     public void update(Accident accident) {
-        accidentHibernate.update(accident);
+        Accident toUpdate = accidentRepository.findById(accident.getId()).get();
+        toUpdate.setName(accident.getName());
+        accidentRepository.save(toUpdate);
     }
 }
