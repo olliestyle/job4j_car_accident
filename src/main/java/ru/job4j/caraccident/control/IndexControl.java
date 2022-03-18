@@ -1,12 +1,10 @@
 package ru.job4j.caraccident.control;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.job4j.caraccident.model.Accident;
 import ru.job4j.caraccident.service.AccidentService;
-
-import java.util.List;
 
 @Controller
 public class IndexControl {
@@ -19,8 +17,8 @@ public class IndexControl {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Accident> list = (List<Accident>) accidentService.findAllAccidents();
-        model.addAttribute("accidents", list);
+        model.addAttribute("accidents", accidentService.findAllAccidents());
+        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "index";
     }
 }
