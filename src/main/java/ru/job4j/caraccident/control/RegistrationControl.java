@@ -2,6 +2,7 @@ package ru.job4j.caraccident.control;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,12 +21,19 @@ public class RegistrationControl {
     }
 
     @PostMapping("/reg")
-    public String regSave(@ModelAttribute User user) {
-        user.setEnabled(true);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setAuthority(registrationService.findUserByAuthority("ROLE_USER"));
-        registrationService.saveUser(user);
-        return "redirect:/login";
+    public String regSave(Model model, @ModelAttribute User user) {
+        String toReturn;
+        if (!registrationService.existsUserByUsername(user.getUsername())) {
+            user.setEnabled(true);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setAuthority(registrationService.findUserByAuthority("ROLE_USER"));
+            registrationService.saveUser(user);
+            toReturn = "redirect:/login";
+        } else {
+            model.addAttribute("errorMessage", "User with this username already exists");
+            toReturn = "reg";
+        }
+        return toReturn;
     }
 
     @GetMapping("/reg")
